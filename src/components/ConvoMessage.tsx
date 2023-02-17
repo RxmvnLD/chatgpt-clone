@@ -1,15 +1,18 @@
-import { SiOpenai } from "react-icons/si"
-import { BiLike, BiDislike } from "react-icons/bi"
+import { SiOpenai } from "react-icons/si";
+import { BiLike, BiDislike } from "react-icons/bi";
+import useTypingEffect from "@/hooks/useTypingEffect";
 
 type convoMessageProps = {
   messageData: {
-    id: number
-    message: string
-    ia: boolean
-  }
-}
+    id: number;
+    message: string;
+    ia: boolean;
+  };
+};
 
 const ConvoMessage = ({ messageData }: convoMessageProps) => {
+  const displayText = useTypingEffect(messageData.message);
+
   return (
     <section
       key={messageData.id}
@@ -33,7 +36,10 @@ const ConvoMessage = ({ messageData }: convoMessageProps) => {
         {/*-------------*/}
 
         {/*MESSAGE*/}
-        <div className="flex-1">{messageData.message}</div>
+        <div className="flex-1">
+          {messageData.ia ? displayText : messageData.message}
+        </div>
+
         {/*-------*/}
 
         {/*LIKES*/}
@@ -52,7 +58,7 @@ const ConvoMessage = ({ messageData }: convoMessageProps) => {
         {/*-----*/}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ConvoMessage
+export default ConvoMessage;
