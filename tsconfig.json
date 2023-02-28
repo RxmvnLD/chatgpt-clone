@@ -23,8 +23,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/store/features/chat/chatSlice.ts",
-    "src/store/chatSlice"
+    "src/store/features/conversation/ChatSlice.ts",
+    "src/store/ChatSlice"
   ],
   "exclude": ["node_modules"]
 }
