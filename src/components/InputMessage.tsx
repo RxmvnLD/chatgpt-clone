@@ -7,13 +7,14 @@ import {
   KeyboardEvent
 } from "react";
 import { FiSend } from "react-icons/fi";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { addMessage } from "@/store/features/chat/chatSlice";
 import axios from "axios";
 
 const InputMessage = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useDispatch();
+  const chatID = useSelector((state: any) => state.chat.chatID);
 
   const getIAResponse = async (userPrompt: string) => {
     try {
@@ -23,6 +24,7 @@ const InputMessage = () => {
       console.log("res", result.data);
       dispatch(
         addMessage({
+          chatID,
           id: Date.now(),
           message: result.data.choices[0].text,
           ia: true

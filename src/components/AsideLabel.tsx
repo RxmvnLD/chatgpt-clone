@@ -1,20 +1,25 @@
-import React from "react"
-import { BiTrash } from "react-icons/bi"
-import { FiEdit3, FiMessageSquare } from "react-icons/fi"
+import React from "react";
+import { BiTrash } from "react-icons/bi";
+import { FiEdit3, FiMessageSquare } from "react-icons/fi";
+import Link from "next/router";
 
-type AsideConvoProps = {
-  children: React.ReactNode
-  isActive?: boolean
+interface AsideLabelProps {
+  children: React.ReactNode;
 }
-const AsideLabel = ({ children }: AsideConvoProps) => {
+const AsideLabel = ({ children }: AsideLabelProps) => {
   return (
     <div className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all  group">
       {children}
     </div>
-  )
+  );
+};
+
+interface AsideConvoProps extends AsideLabelProps {
+  isActive: boolean;
+  chatID?: string;
 }
 
-export const AsideConvo = ({ children, isActive }: AsideConvoProps) => {
+export const ConvoComponent = ({ isActive, children }: AsideConvoProps) => {
   return (
     <div
       className={`flex py-3 px-3 items-center gap-3 relative rounded-md  cursor-pointer break-all ${
@@ -22,24 +27,32 @@ export const AsideConvo = ({ children, isActive }: AsideConvoProps) => {
       }`}
     >
       <FiMessageSquare className="text-base" />
-      <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+      <div className="relative flex-1 overflow-hidden break-all text-ellipsis max-h-5">
         {children}
         {isActive ? (
           <>
-            <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gpt-gray" />
+            <div className="absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-gpt-gray" />
           </>
         ) : null}
       </div>
       {isActive ? (
         <>
-          <div className="flex z-20 text-gray-300 visible gap-2">
+          <div className="z-20 flex visible gap-2 text-gray-300">
             <FiEdit3 className="text-base hover:text-white" />
             <BiTrash className="text-base hover:text-white" />
           </div>
         </>
       ) : null}
     </div>
-  )
-}
+  );
+};
 
-export default AsideLabel
+export const AsideConvo = ({ children, isActive, chatID }: AsideConvoProps) => {
+  return (
+    <Link href={`/chat/${chatID}`} passHref LegacyBehavior>
+      <ConvoComponent isActive={isActive} children={children} />
+    </Link>
+  );
+};
+
+export default AsideLabel;
