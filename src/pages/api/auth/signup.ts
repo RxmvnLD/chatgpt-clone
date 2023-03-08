@@ -22,7 +22,9 @@ export default async function handler(
     const checkExisting = await User.findOne({ email: email });
     //Error if the user already exists
     if (checkExisting)
-      return res.status(422).json({ message: "User already exists" });
+      return res.status(422).json({
+        message: "A user already exists for the specified email address."
+      });
     //Encrypt the password
     const newUser = new User({
       username: username,

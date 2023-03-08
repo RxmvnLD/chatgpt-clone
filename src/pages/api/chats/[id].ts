@@ -50,19 +50,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     case "DELETE":
       try {
+        //Delete chat by id
         const deletedTask = await Chat.findByIdAndDelete(id);
+        //If chat not found return 404
         if (!deletedTask)
           return res.status(404).json({ error: "Chat not found" });
+        //Find user by id
         const user = await User.findById(deletedTask.user);
-        console.log("user chats", user.chats);
+        //Delete the reference of the chat in the user chats array
         user.chats = user.chats.filter(
           (chat: Schema.Types.ObjectId) => chat != deletedTask.id
         );
+        //Save changes
         await user.save({ validateBeforeSave: false });
         return res.status(204).json("Chat deleted");
       } catch (error) {
         if (error instanceof Error) {
-          console.log(error);
           return res.status(400).json({ error: error.message });
         }
       }
