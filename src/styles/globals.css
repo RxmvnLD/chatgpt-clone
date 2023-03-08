@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  @apply text-gray-300 scroll-smooth;
+  @apply text-gray-300 scroll-smooth bg-gpt-gray;
 }
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {

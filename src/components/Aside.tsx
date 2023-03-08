@@ -11,14 +11,15 @@ import { RxDiscordLogo } from "react-icons/rx";
 import NewChatBtn from "./NewChatBtn";
 import { useSelector } from "react-redux";
 import { Chat } from "@/config/types";
-
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 interface AsideProps {
   chatID?: string;
 }
 
 const Aside = ({ chatID }: AsideProps) => {
+  const router = useRouter();
   const chats = useSelector((state: any) => state.chat.chats);
-  console.log(chats);
 
   return (
     <nav className="bg-gpt-dark-gray w-[260px] flex space-y-1 flex-col gap-2 text-sm p-2 fixed h-full">
@@ -70,7 +71,14 @@ const Aside = ({ chatID }: AsideProps) => {
         </AsideLabel>
         <AsideLabel>
           <FiLogOut className="text-base" />
-          <div>Log Out</div>
+          <div
+            onClick={() => {
+              signOut();
+              router.push("/");
+            }}
+          >
+            Log Out
+          </div>
         </AsideLabel>
       </div>
       {/*-------*/}
